@@ -44,7 +44,9 @@ EmailObfuscate(el, {
   domain: 'example',
   tld: 'com',
   // Alternate Text
-  altText: 'Email'
+  altText: 'Email',
+  // Force an individual color
+  color: 'rgba(0,0,0,0)'
 });
 ```
 
@@ -86,7 +88,14 @@ The top-level domain portion of the email address to use (name@email.**com**).
 Type: `string`  
 Default: `Email`
 
-The alternate text to use to represent the email address.  
+The alternate text to use to represent the email address.
+
+##### color
+
+Type: `string`
+Default: `computed color style of element`
+
+Forces a individual color for the text. The general rules for setting the color apply.
 
 ## Dev
 

@@ -1,6 +1,6 @@
 {
-  "extends": "airbnb/base",
+  "extends": "standard",
   "rules": {
-    "semi": [2, "never"] 
+    "semi": [2, "always"]
   }
 }

@@ -1,24 +1,21 @@
-import expect from 'expect'
-import describeClass from '../src/canvasText'
+/* eslint-env mocha */
+import expect from 'expect';
+import DescribeClass from '../src/canvasText';
 
 describe('CanvasText', () => {
-  let subject
-  let options = {}
-  let el
-
+  let subject;
+  let options = {};
+  let el;
   beforeEach(() => {
-    el = document.createElement('div')
-    document.body.appendChild(el)
-  })
-
+    el = document.createElement('div');
+    document.body.appendChild(el);
+  });
   afterEach(() => {
-    document.body.removeChild(el)
-  })
-
+    document.body.removeChild(el);
+  });
   it('should throw an error without options', () => {
-    expect(() => new describeClass(el)).toThrow()
-  })
-
+    expect(() => new DescribeClass(el)).toThrow();
+  });
   beforeEach(() => {
     options = {
       color: 'rgb(0, 0, 0)',
@@ -28,20 +25,15 @@ describe('CanvasText', () => {
       text: 'email@obfuscate.js',
       underline: false,
       width: 123
-    }
-    subject = new describeClass(el, options)
-  })
-
+    };
+    subject = new DescribeClass(el, options);
+  });
   describe('creates a canvas element', () => {
-
     it('should have a set width', () => {
-      expect(subject.create().width).toEqual(options.width)
-    })
-
+      expect(subject.create().width).toEqual(options.width);
+    });
     it('should have a set height', () => {
-      expect(subject.create().height).toEqual(options.height)
-    })
-
-  })
-
-})
+      expect(subject.create().height).toEqual(options.height);
+    });
+  });
+});
