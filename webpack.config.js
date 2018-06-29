@@ -1,44 +1,46 @@
-const path = require('path')
-const webpack = require('webpack')
+const path = require('path');
+const webpack = require('webpack');
 
-const TARGET = process.env.npm_lifecycle_event
+const TARGET = process.env.npm_lifecycle_event;
 const config = {
   library: 'EmailObfuscate',
   filename: 'emailObfuscate',
   example: 'index',
   bundle: 'bundle'
-}
+};
 const paths = {
   SRC: path.resolve(__dirname, './src'),
   EXAMPLE: path.resolve(__dirname, './example'),
   BUILD: path.resolve(__dirname, './lib')
-}
+};
 
-var webpackBase = {
+let webpackBase = {
+  entry: path.join(paths.SRC, '/', config.filename, '.js'),
   output: {
     path: paths.EXAMPLE,
     filename: `${config.bundle}.js`
   },
   module: {
-    loaders: [{
-      test: /\.js?$/,
-      loader: 'babel-loader',
-      include: [paths.SRC, paths.EXAMPLE],
-      exclude: /node_modules/
-    }],
-    preLoaders: [{
-      test: /\.js?$/,
-      loader: 'eslint',
-      include: paths.SRC,
-      exclude: /node_modules/
-    }]
+    rules: [
+      {
+        test: /\.js?$/,
+        loader: 'babel-loader',
+        include: [paths.SRC, paths.EXAMPLE],
+        exclude: /node_modules/
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        include: [paths.SRC, paths.EXAMPLE],
+        loader: 'eslint-loader'
+      }
+    ]
   }
-}
+};
 
 if (TARGET === 'start' || !TARGET) {
   module.exports = Object.assign(webpackBase, {
     entry: [
-      'webpack/hot/dev-server',
       `${paths.EXAMPLE}/${config.example}.js`
     ],
     devtool: 'source-map',
@@ -53,7 +55,7 @@ if (TARGET === 'start' || !TARGET) {
         'process.env.NODE_ENV': JSON.stringify('development')
       })
     ]
-  })
+  });
 }
 
 if (TARGET === 'build-example') {
@@ -62,14 +64,12 @@ if (TARGET === 'build-example') {
     plugins: [
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('production')
-      }),
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false
-        }
       })
-    ]
-  })
+    ],
+    optimization: {
+      minimize: true
+    }
+  });
 }
 
 if (TARGET === 'build-lib') {
@@ -82,22 +82,20 @@ if (TARGET === 'build-lib') {
       filename: config.filename + '.js'
     },
     module: {
-      loaders: [{
+      rules: [{
         test: /\.js?$/,
         loader: 'babel-loader',
         include: [paths.SRC],
         exclude: /node_modules/
-      }],
+      }]
     },
     plugins: [
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('production')
-      }),
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false
-        }
       })
-    ]
-  })
+    ],
+    optimization: {
+      minimize: true
+    }
+  });
 }

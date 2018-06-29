@@ -1,8 +1,9 @@
-import expect from 'expect'
-import describeClass from '../src/ratio'
+/* eslint-env mocha */
+import expect from 'expect';
+import describeClass from '../src/ratio';
 
 describe('Ratio', () => {
-  let subject
+  let subject;
   const context = (ratio) => {
     return {
       webkitBackingStorePixelRatio: ratio,
@@ -10,8 +11,8 @@ describe('Ratio', () => {
       msBackingStorePixelRatio: ratio,
       oBackingStorePixelRatio: ratio,
       backingStorePixelRatio: ratio
-    }
-  }
+    };
+  };
 
   it('should determine the correct pixel ratio', () => {
     const values = [{
@@ -23,12 +24,11 @@ describe('Ratio', () => {
     }, {
       input: 4,
       output: 0.25
-    }]
+    }];
 
     values.map((v) => {
-      subject = new describeClass(context(v.input))
-      expect(subject.calculate()).toEqual(v.output)
-    })
-  })
-
-})
+      subject = new describeClass(context(v.input));
+      expect(subject.calculate()).toEqual(v.output);
+    });
+  });
+});

@@ -1,10 +1,10 @@
-const path = require('path')
-const webpack = require('webpack')
+const path = require('path');
+const webpack = require('webpack');
 
 const paths = {
   SRC: path.resolve(__dirname, 'src'),
   TEST: path.resolve(__dirname, 'test')
-}
+};
 
 module.exports = (config) => {
   config.set({
@@ -12,7 +12,7 @@ module.exports = (config) => {
     frameworks: ['mocha'],
 
     preprocessors: {
-      'test/**/*': ['webpack'],
+      'test/**/*': ['webpack']
     },
 
     reporters: ['dots'],
@@ -29,15 +29,14 @@ module.exports = (config) => {
 
     webpack: {
       module: {
-        loaders: [{
+        rules: [{
           test: /\.js?$/,
           loader: 'babel-loader',
           include: [paths.SRC, paths.TEST],
           exclude: /node_modules/
-        }],
-        preLoaders: [{
+        }, {
           test: /\.js?$/,
-          loader: 'eslint',
+          loader: 'eslint-loader',
           include: paths.SRC,
           exclude: /node_modules/
         }]
@@ -57,5 +56,5 @@ module.exports = (config) => {
 
     singleRun: false
 
-  })
-}
+  });
+};
